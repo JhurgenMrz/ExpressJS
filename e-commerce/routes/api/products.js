@@ -51,7 +51,7 @@ router.post('/', async function(req, res){
     }
 })
 
-router.put('/', async function(req, res){
+router.put('/:productId', async function(req, res){
     const {productId} = req.params; 
     const {body: product} = req;
     console.log('req', req)
