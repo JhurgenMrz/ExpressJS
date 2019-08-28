@@ -13,7 +13,7 @@ const createProductSchema = Joi.object({
 
 const updateProductSchema = Joi.object({
     name: Joi.string().max(50),
-    numer: Joi.number().min(1).max(1000000),
+    price: Joi.number().min(1).max(1000000),
     image: Joi.string(),
     tags: productTagSchema
 })
