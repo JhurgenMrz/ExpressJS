@@ -1,4 +1,5 @@
 const {config} = require('../config/index');
+const debug = require('debug')('app:mongo')
 const {MongoClient, ObjectId} = require('mongodb')
 
 const USER = encodeURIComponent(config.DB_USER);
@@ -19,10 +20,10 @@ class MongoLib{
         return new Promise((resolve, reject) => {
             this.client.connect(err=>{
                 if(err){
-                    console.log('Error :D');
+                    debug('Error :D');
                     reject(err)
                 }else{
-                    console.log('Connected succesfully to mongodb')
+                    debug('Connected succesfully to mongodb')
                     resolve(this.client.db(this.dbName))
                 }
 

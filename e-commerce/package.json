@@ -4,8 +4,12 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "node index",
-    "dev": "nodemon index"
+    "start": "SET NODE_ENV=production && node index",
+    "build": "cd public/assets && cleancss -o main.min.css main.css",
+    "dev": "nodemon index",
+    "dev:inspect": "nodemon --inspect index",
+    "dev:debug": "set DEBUG=express:*,app:*& npm run dev",
+    "debug": "set DEBUG=express:*,app:*& npm run start"
   },
   "keywords": [],
   "author": "",
@@ -16,8 +20,10 @@
     "@sentry/node": "^5.6.2",
     "bcrypt": "^3.0.6",
     "body-parser": "^1.19.0",
+    "debug": "^4.1.1",
     "dotenv": "^8.1.0",
     "express": "^4.17.1",
+    "helmet": "^3.20.0",
     "jsonwebtoken": "^8.5.1",
     "mongodb": "^3.3.1",
     "passport": "^0.4.0",
@@ -27,6 +33,7 @@
   },
   "devDependencies": {
     "chalk": "^2.4.2",
+    "clean-css-cli": "^4.3.0",
     "nodemon": "^1.19.1"
   }
 }

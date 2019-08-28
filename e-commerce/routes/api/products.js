@@ -18,7 +18,6 @@ const productsService = new ProductsService();
 
 router.get('/', async function(req, res,next){
     const {tags} = req.query;
-    console.log('req', req.query)
     try{
         // throw new Error('This is an error from the API');
         const products = await productsService.getProducts({tags})
@@ -35,7 +34,6 @@ router.get('/', async function(req, res,next){
 router.get('/:productId',async function(req, res, next ){
 
     const {productId} = req.params;
-    console.log('req', req)
 
     try{
         const product = await productsService.getProduct({productId})
@@ -50,7 +48,7 @@ router.get('/:productId',async function(req, res, next ){
 
 router.post('/', validation(createProductSchema), async function(req, res){
     const { body: product} = req;
-    // console.log('req', req)
+
 
     try{
         const CreatedProduct = await productsService.createProduct({product})
@@ -67,7 +65,6 @@ router.put('/:productId', passport.authenticate("jwt", {session: false}),
 validation({ productId: productIdSchema}, "params"), validation(updateProductSchema), async function(req, res){
     const {productId} = req.params; 
     const {body: product} = req;
-    console.log('req', req)
 
     try{
     const updateProduct = await productsService.updateProduct({productId, product})
@@ -83,7 +80,6 @@ validation({ productId: productIdSchema}, "params"), validation(updateProductSch
 router.delete('/:productId',passport.authenticate("jwt", {session: false}),
 async function(req, res){
     const {productId} = req.params;
-    console.log('req', req)
 
     try{
         const product = await productsService.deleteProduct({productId})

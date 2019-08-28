@@ -2,6 +2,9 @@ const express = require('express');
 const path = require("path")
 const bodyParser = require('body-parser');
 const boom = require('@hapi/boom');
+const debug = require('debug')('app:server');
+const helmet = require('helmet')
+
 const productsRouter = require('./routes/views/products')
 const productsApiRouter = require('./routes/api/products')
 const authApiRouter = require('./routes/api/auth')
@@ -18,6 +21,7 @@ const isRequestAjaxOrApi = require('./utils/isRequestAjaxOrApi')
 const app = express();
 
 // middlewares
+app.use(helmet());
 app.use(bodyParser.json());
 
 // static files
@@ -57,5 +61,5 @@ app.use(errorHandler);
 
 // server 
 const server = app.listen(8000, function(){
-    console.log(`Listen http://localhost:${server.address().port}`)
+    debug(`Listen http://localhost:${server.address().port}`)
 });
