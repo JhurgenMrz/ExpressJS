@@ -9,14 +9,26 @@ const {
     productTagSchema } = require('../../utils/schemas/products')
 const validation = require('../../utils/middlewares/validationHandler')
 
+const cacheResponse = require('../../utils/cacheResponse');
+const {FIVE_MINUTES_IN_SECONDS, SIXTY_MINUTES_IN_SECONDS} = require('../../utils/time')
+
 // JWT
 require('../../utils/auth/strategies/jwt');
 
 
-const productsService = new ProductsService();
+
+function productsApi(app){
+    const router = express.Router();
+    app.use("/api/products", router);
+    const productsService = new ProductsService();
+
+
 
 
 router.get('/', async function(req, res,next){
+
+    cacheResponse(res, FIVE_MINUTES_IN_SECONDS);
+
     const {tags} = req.query;
     try{
         // throw new Error('This is an error from the API');
@@ -33,6 +45,7 @@ router.get('/', async function(req, res,next){
 
 router.get('/:productId',async function(req, res, next ){
 
+    cacheResponse(res, SIXTY_MINUTES_IN_SECONDS);
     const {productId} = req.params;
 
     try{
@@ -93,4 +106,7 @@ async function(req, res){
     
 })
 
-module.exports = router;
+}
+
+
+module.exports = productsApi;

@@ -3,7 +3,8 @@ const path = require("path")
 const bodyParser = require('body-parser');
 const boom = require('@hapi/boom');
 const debug = require('debug')('app:server');
-const helmet = require('helmet')
+const helmet = require('helmet');
+const cors = require('cors');
 
 const productsRouter = require('./routes/views/products')
 const productsApiRouter = require('./routes/api/products')
@@ -20,8 +21,15 @@ const isRequestAjaxOrApi = require('./utils/isRequestAjaxOrApi')
 // app
 const app = express();
 
+
+//config cors
+// const corsOptions = { origin: "http://example.com" };
+// app.use(cors(corsOptions));
+
+
 // middlewares
 app.use(helmet());
+app.use(cors());
 app.use(bodyParser.json());
 
 // static files
@@ -33,7 +41,7 @@ app.set("view engine", "pug");
 
 // routes
 app.use('/products', productsRouter);
-app.use('/api/products' , productsApiRouter);
+productsApiRouter(app);
 app.use('/api/auth', authApiRouter)
 
 // redirect
